@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0%;
+            margin: 0%;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+            background: #16242e;
+        }
+
+        .face {
+            position: relative;
+            background: #ffcd00;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: -5px -5px 16px rgba(0, 0, 0, 0.5), 5px 5px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .face::before {
+            content: "";
+            background: #b57700;
+            width: 150px;
+            height: 70px;
+            position: absolute;
+            top: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.2s;
+            border-radius: 0% 0% 70px 70px;
+        }
+
+        .face:hover:before {
+            top: 210px;
+            height: 20px;
+            border-radius: 0%;
+        }
+
+        .eyes {
+            position: relative;
+            top: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .eyes .eye,
+        .eyes .eye1 {
+            background: #fff;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            border-radius: 50%;
+            margin: 0px 20px;
+        }
+
+        .eye:hover {
+            transition: all 0.1s ease;
+            width: 80px;
+            height: 80px;
+        }
+
+        .eye:hover .eyebefore {
+            transition: all 0.1s ease;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+        }
+
+        .eyebefore {
+            content: "";
+            width: 40%;
+            height: 40%;
+            background: #333;
+            position: absolute;
+            top: 50%;
+            left: 35%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="face">
+        <div class="eyes">
+            <div class="eye">
+                <div class="eyebefore"></div>
+            </div>
+            <div class="eye">
+                <div class="eyebefore"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('mousemove', funEye);
+
+        function funEye(event) {
+            var eye = document.querySelectorAll(".eye");
+            eye.forEach(function (eye) {
+                let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
+                let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
+                let pointX = event.pageX;
+                let pointY = event.pageY;
+
+                let X_axis = (pointX - x) * -1;
+                let Y_axis = (pointY - y) * -1;
+                let radian = Math.atan2(Y_axis, X_axis);
+                let deg = radian * (180 / Math.PI);
+                console.log(Math.floor(deg));
+
+                eye.style.transform = `rotate(${deg}deg)`;
+            });
+        }
+    </script>
+
+</body>
+
+</html>
